@@ -367,7 +367,7 @@ def get_diff_options(req):
 
     #pprint(changes)
 
-style = '''<style type="text/css">
+style = u'''<style type="text/css">
     .add { background-color: #ddffdd; }
     .rem { background-color: #ffdddd; }
     del { background-color: rgb(238, 153, 153); }
@@ -381,8 +381,17 @@ style = '''<style type="text/css">
     }
     </style>
     '''
+header = u'''<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<pre>
+'''
+footer = u'</pre></body></html>\n'
+
 def to_html(changes):
-    html = [u'<html><head></head><body><pre>', style]
+    html = [, style]
     def _add(lines, style):
         html.extend([
             u'<span class="%s">' % style,
@@ -401,7 +410,7 @@ def to_html(changes):
         elif chg['type'] == 'rem':
             _add(chg['base']['lines'], 'rem')
         
-    html.append(u'</pre></body></html>\n')
+    html.append(footer)
     
     return u''.join(html)
 
